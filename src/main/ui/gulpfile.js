@@ -8,15 +8,21 @@ const gulpRemoveHtml = require('gulp-remove-html');
 const SystemBuilder = require('systemjs-builder');
 const dist = 'dist';
 
-var libraries=[
+var js=[
     'node_modules/core-js/client/shim.min.js',
     'node_modules/zone.js/dist/zone.js',
     'node_modules/reflect-metadata/Reflect.js',
     'node_modules/systemjs/dist/system.src.js'
 ];
 
+// old  'node_modules/bootstrap/dist/css/bootstrap.css'
+
 var css=[
-    'node_modules/bootstrap/dist/css/bootstrap.css'
+    'node_modules/bootswatch/flatly/bootstrap.css'
+];
+
+var fonts=[
+    'node_modules/bootstrap/dist/fonts/**'
 ];
 
 
@@ -29,7 +35,7 @@ gulp.task('clean', function () {
 // TypeScript compile
 gulp.task('compile', ['clean'], function () {
     return gulp
-        .src('app/**/*.ts')
+        .src('app/src/**/*.ts')
         .pipe(sourcemaps.init())          // <--- sourcemaps
         .pipe(typescript(tscConfig.compilerOptions))
         .pipe(sourcemaps.write('.'))      // <--- sourcemaps
@@ -37,9 +43,21 @@ gulp.task('compile', ['clean'], function () {
 });
 
 // copy dependencies
-gulp.task('copy:libs',  ['clean'], function() {
-    return gulp.src(libraries.concat(css))
+gulp.task('copy:libs',  ['copy:js', 'copy:css', 'copy:fonts']);
+
+gulp.task('copy:js', ['clean'], function() {
+    return gulp.src(js)
         .pipe(gulp.dest(dist+'/lib'))
+});
+
+gulp.task('copy:css', ['clean'], function() {
+    return gulp.src(css)
+        .pipe(gulp.dest(dist+'/lib/css'))
+});
+
+gulp.task('copy:fonts', ['clean'], function() {
+    return gulp.src(fonts)
+        .pipe(gulp.dest(dist+'/lib/fonts'))
 });
 
 
@@ -79,7 +97,7 @@ gulp.task('index',  ['copy:assets', 'copy:libs', 'systemjs-bundle'], function() 
 
 
 gulp.task('copy:sources',  ['clean'], function() {
-    return gulp.src('app/**')
+    return gulp.src('app/**/*.ts')
         .pipe(gulp.dest(dist+'/source/'))
 });
 

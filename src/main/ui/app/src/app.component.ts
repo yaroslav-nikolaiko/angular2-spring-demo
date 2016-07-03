@@ -1,13 +1,12 @@
 import {Component} from '@angular/core';
-import {TweetsComponent} from "./tweets.component";
+import {NavbarComponent} from "./navbar.component";
 
 @Component({
     selector: 'my-app',
     template: `
-    <h1>Twitter Page 2 1</h1>
-    <tweets></tweets>
+    <my-navbar></my-navbar>
     `,
-    directives:[TweetsComponent]
+    directives: [NavbarComponent]
 })
 export class AppComponent {
 
