@@ -61,7 +61,7 @@ gulp.task('systemjs-bundle',['compile', 'copy:libs', 'copy:assets'], function() 
                 minify: prod,
                 mangle: prod,
                 rollup: prod,
-                sourceMaps: true,
+                sourceMaps: true
             });
         })
 });
@@ -77,7 +77,7 @@ gulp.task('index',  ['copy:assets', 'copy:libs', 'systemjs-bundle'], function() 
         .pipe(gulp.dest(dist));
 });
 
-// copy dependencies
+
 gulp.task('copy:sources',  ['clean'], function() {
     return gulp.src('app/**')
         .pipe(gulp.dest(dist+'/source/'))

@@ -1,4 +1,4 @@
-package education.elevator.system;
+package education.elevator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,8 +9,13 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
  * Created by ynikolaiko on 1/28/16.
  */
 @SpringBootApplication
-public class Application {
-    public static void main(String[] args) throws Exception {
+public class Application extends SpringBootServletInitializer {
+    public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
+
 }
