@@ -2,6 +2,7 @@ var proxyMiddleware = require('http-proxy-middleware');
 var fallbackMiddleware = require('connect-history-api-fallback');
 
 module.exports = {
+    files: ['compiled/**/*', 'app/**/*', '!app/**/*.ts'],
     server: {
         middleware: {
             1: proxyMiddleware('/api', {
