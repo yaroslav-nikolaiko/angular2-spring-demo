@@ -1,4 +1,4 @@
-package education.elevator;
+package education.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

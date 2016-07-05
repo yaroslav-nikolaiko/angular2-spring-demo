@@ -1,5 +1,6 @@
-package education.elevator.system;
+package education.demo.rest;
 
+import education.demo.model.Greeting;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by yaroslav on 03.07.16.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/hello")
 public class DemoController {
 
     @RequestMapping( method = RequestMethod.GET)
