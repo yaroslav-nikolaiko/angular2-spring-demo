@@ -1,5 +1,5 @@
 import { provideRouter, RouterConfig } from '@angular/router';
-import {UsersComponent} from "./users.component";
+import {UsersComponent} from "./user/users.component";
 import {PostsComponent} from "./posts.component";
 
 export const routes: RouterConfig = [

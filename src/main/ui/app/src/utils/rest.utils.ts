@@ -20,9 +20,18 @@ export class RestUtils{
         return this.getEntryPoint().map(entity=>this.getList(link, entity));
     }*/
 
-    getList<T>(link: string, entity?: HalEntity<T>): Observable<[T]>{
+    getList(link: string){
+        return this.getEntryPoint().flatMap(entity=>{
+            return this.http.get(entity._links[link].href, {headers: this.headers})
+                .map(res=>res.json()._embedded[link]);
+        });
+
+
+    }
+
+    getList1<T>(link: string, entity?: HalEntity<T>): Observable<[T]>{
         if(! entity)
-            return this.getEntryPoint().flatMap(e=>this.getList(link, e));
+            return this.getEntryPoint().flatMap(e=>this.getList1(link, e));
 
        return this.http.get(entity._links[link].href, {headers: this.headers})
             .map(res=>{
