@@ -1,7 +1,6 @@
 import {Component, OnInit,} from '@angular/core';
 import {RestUtils} from "../utils/rest.utils";
 import {HTTP_PROVIDERS} from "@angular/http";
-import {ControlGroup} from "@angular/common";
 import {REACTIVE_FORM_DIRECTIVES, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BasicValidators} from "../utils/validators";
 
@@ -28,5 +27,4 @@ export class UserFormComponent implements OnInit{
         })
     });
     }
-    
 }
