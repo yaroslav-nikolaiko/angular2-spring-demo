@@ -1,6 +1,7 @@
 import { provideRouter, RouterConfig } from '@angular/router';
 import {UsersComponent} from "./user/users.component";
 import {PostsComponent} from "./posts.component";
+import {UserFormComponent} from "./user/user.form.component";
 
 export const routes: RouterConfig = [
     {
@@ -9,6 +10,7 @@ export const routes: RouterConfig = [
         pathMatch: "full"
     },
     { path: 'users', component: UsersComponent },
+    { path: 'users/new', component: UserFormComponent },
     { path: 'posts', component: PostsComponent }
 ];
 
