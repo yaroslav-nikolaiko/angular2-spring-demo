@@ -3,6 +3,7 @@ import {RestUtils} from "../utils/rest.utils";
 import {HTTP_PROVIDERS} from "@angular/http";
 import {REACTIVE_FORM_DIRECTIVES, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BasicValidators} from "../utils/validators";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'users',
@@ -12,19 +13,25 @@ import {BasicValidators} from "../utils/validators";
 })
 export class UserFormComponent implements OnInit{
     form: FormGroup;
+    canDeactivate = false;
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: FormBuilder, private router:Router) {}
 
-    ngOnInit(){
+    ngOnInit() {
         this.form = this.formBuilder.group({
             name: ['', Validators.required],
             email: ['', BasicValidators.email],
             address: this.formBuilder.group({
-            street: [],
-            suite: [],
-            zip: [],
-            city: []
-        })
-    });
+                street: [],
+                suite: [],
+                zip: [],
+                city: []
+            })
+        });
+    }
+
+    save(){
+        this.canDeactivate = true;
+        this.router.navigateByUrl("/");
     }
 }
