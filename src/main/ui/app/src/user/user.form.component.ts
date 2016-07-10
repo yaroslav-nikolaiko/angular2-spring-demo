@@ -25,7 +25,7 @@ export class UserFormComponent implements OnInit{
 
     ngOnInit() {
         this.route.params
-            .map(params=>params['id'])
+            .map(params=>params['href'])
             .map(id => this.decodeURL(id))
             .filter(id=>id != 'new')
             .flatMap(id=>this.userService.get(id))
