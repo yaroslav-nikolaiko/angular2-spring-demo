@@ -27,6 +27,10 @@ export class RestUtils{
         return this.http.get(href, {headers: this.headers}).map(res=>res.json());
     }
 
+    delete(entity: any) {
+        return this.http.delete(entity._links.self.href, {headers: this.headers});
+    }
+
     private getEntryPoint(): Observable<any> {
         if(this.entryPoint) return Observable.of(this.entryPoint);
 

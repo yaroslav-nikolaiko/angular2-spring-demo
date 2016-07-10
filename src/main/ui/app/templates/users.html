@@ -16,11 +16,11 @@
             <td>{{ user.email }}</td>
             <td>
                 <a [routerLink]="[encodeURL(user._links.self.href)]">
-                    <i  class="glyphicon glyphicon-edit"></i>
+                    <i  class="glyphicon glyphicon-edit clickable"></i>
                 </a>
             </td>
             <td>
-                <i class="glyphicon glyphicon-remove clickable"></i>
+                <i class="glyphicon glyphicon-remove clickable" (click)="delete(user)"></i>
             </td>
         </tr>
         </tbody>
