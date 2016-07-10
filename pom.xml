@@ -16,6 +16,8 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+
+        <rest.only>false</rest.only>
     </properties>
 
     <dependencies>
@@ -56,14 +58,17 @@
     <build>
         <plugins>
 
-<!--            <plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>-->
+            </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <skip>${rest.only}</skip>
+                </configuration>
                 <executions>
                     <execution>
                         <id>exec-npm-install</id>
