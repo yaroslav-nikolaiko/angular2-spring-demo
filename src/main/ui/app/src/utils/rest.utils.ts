@@ -19,6 +19,10 @@ export class RestUtils{
         return this.httpPOST(link, entity).map(res=>res.json());
     }
 
+    update(entity: any){
+        return this.http.put(entity._links.self.href, entity, {headers: this.headers}).map(res=>res.json());
+    }
+
     get(href: string): Observable<any>{
         return this.http.get(href, {headers: this.headers}).map(res=>res.json());
     }

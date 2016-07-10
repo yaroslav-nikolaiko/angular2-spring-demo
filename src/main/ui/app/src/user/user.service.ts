@@ -20,6 +20,9 @@ export class UserService{
     }
 
     save(user: User){
-       return this.restUtils.save('accounts', user) as Observable<User[]>;
+        if(user['_links'])
+            return this.restUtils.update(user) as Observable<User[]>;
+        else
+            return this.restUtils.save('accounts', user) as Observable<User[]>;
     }
 }
