@@ -28,7 +28,7 @@ public class Account {
     @Column(unique = true)
     String email;
 
-    @OneToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="GREETINGS_ID")
-    Greeting greeting;
+    @OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="ADDRESS_ID")
+    Address address;
 }

@@ -21,4 +21,8 @@ export class UsersComponent implements OnInit {
     ngOnInit(){
         this.userService.getUsers().subscribe(users=>this.users = users);
     }
+
+    encodeURL(href: string){
+        return encodeURIComponent(href);
+    }
 }

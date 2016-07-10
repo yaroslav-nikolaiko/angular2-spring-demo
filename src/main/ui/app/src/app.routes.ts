@@ -11,7 +11,7 @@ export const routes: RouterConfig = [
         pathMatch: "full"
     },
     { path: 'users', component: UsersComponent },
-    { path: 'users/new', component: UserFormComponent, canDeactivate: [CanDeactivateUserForm]},
+    { path: 'users/:id', component: UserFormComponent, canDeactivate: [CanDeactivateUserForm] },
     { path: 'posts', component: PostsComponent }
 ];
 

@@ -1,6 +1,5 @@
 package education.demo.rest;
 
-import education.demo.model.Greeting;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,11 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/hello")
 public class DemoController {
-
-    @RequestMapping( method = RequestMethod.GET)
-    Greeting greeting() {
-        return new Greeting(1, "Hello from server side");
-    }
 
     @RequestMapping(value = "hello", method = RequestMethod.GET)
     String helloWorld() {

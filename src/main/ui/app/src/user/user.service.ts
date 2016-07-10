@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {RestUtils} from "../utils/rest.utils";
-import {User} from "./user";
+import {User, Address} from "./user";
 import {Observable} from "rxjs/Rx";
 
 
@@ -12,6 +12,15 @@ export class UserService{
     }
 
     getUsers(): Observable<User[]>{
-        return this.restUtils.getList('accounts') as Observable<User[]>;
+        //return this.restUtils.getList('accounts').map(users=>{users.forEach(u=>u.validate()); return users;});
+        return this.restUtils.getList('accounts');
+    }
+
+    get(href: string): Observable<User>{
+        return this.restUtils.get(href) as Observable<User>;
+    }
+
+    save(user: User){
+       return this.restUtils.save('accounts', user) as Observable<User[]>;
     }
 }

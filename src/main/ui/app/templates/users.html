@@ -15,8 +15,8 @@
             <td>{{ user.name }}</td>
             <td>{{ user.email }}</td>
             <td>
-                <a>
-                    <i class="glyphicon glyphicon-edit"></i>
+                <a [routerLink]="[encodeURL(user._links.self.href)]">
+                    <i  class="glyphicon glyphicon-edit"></i>
                 </a>
             </td>
             <td>
