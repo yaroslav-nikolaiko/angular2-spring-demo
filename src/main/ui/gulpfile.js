@@ -18,11 +18,13 @@ var js=[
 // old  'node_modules/bootstrap/dist/css/bootstrap.css'
 
 var css=[
-    'node_modules/bootswatch/flatly/bootstrap.css'
+    'node_modules/bootswatch/flatly/bootstrap.css',
+    'node_modules/font-awesome/css/font-awesome.css'
 ];
 
 var fonts=[
-    'node_modules/bootstrap/dist/fonts/**'
+    'node_modules/bootstrap/dist/fonts/**',
+    'node_modules/font-awesome/fonts/**'
 ];
 
 
