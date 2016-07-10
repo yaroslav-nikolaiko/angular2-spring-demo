@@ -1,6 +1,4 @@
 import {Component, OnInit,} from '@angular/core';
-import {RestUtils} from "../utils/rest.utils";
-import {HTTP_PROVIDERS} from "@angular/http";
 import {REACTIVE_FORM_DIRECTIVES, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BasicValidators} from "../utils/validators";
 import {Router, ActivatedRoute} from "@angular/router";
@@ -11,7 +9,7 @@ import {User, Address} from "./user";
     selector: 'users',
     templateUrl: "app/templates/user-form.html",
     directives: [REACTIVE_FORM_DIRECTIVES],
-    providers: [RestUtils, HTTP_PROVIDERS, UserService]
+    providers: [UserService]
 })
 export class UserFormComponent implements OnInit{
     form: FormGroup;

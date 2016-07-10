@@ -1,8 +1,8 @@
 import {provideRouter, RouterConfig} from '@angular/router';
-import {UsersComponent} from "./user/users.component";
-import {PostsComponent} from "./posts.component";
 import {UserFormComponent} from "./user/user.form.component";
 import {CanDeactivateUserForm} from "./utils/can.deacrivate.user.form";
+import {PostsComponent} from "./post/posts.component";
+import {UsersComponent} from "./user/users.component";
 
 export const routes: RouterConfig = [
     {
