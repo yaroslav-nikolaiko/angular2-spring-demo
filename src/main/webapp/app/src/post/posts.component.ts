@@ -12,6 +12,7 @@ import {SpinnerComponent} from "../utils/spinner.component";
 export class PostsComponent implements OnInit {
     posts: Post[] = [];
     isLoading = true;
+    currentPost;
 
     constructor(private _postService: PostService) {
     }
@@ -23,5 +24,9 @@ export class PostsComponent implements OnInit {
                 null,
                 () => this.isLoading = false
             );
+    }
+
+    select(post: Post){
+        this.currentPost = post;
     }
 }
