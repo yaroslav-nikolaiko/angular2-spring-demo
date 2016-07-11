@@ -4,6 +4,7 @@ import {BasicValidators} from "../utils/validators";
 import {Router, ActivatedRoute} from "@angular/router";
 import {UserService} from "./user.service";
 import {User, Address} from "./user";
+import {CustomUriEncoder} from "../utils/encoder";
 
 @Component({
     selector: 'users',
@@ -52,6 +53,6 @@ export class UserFormComponent implements OnInit{
     }
 
     decodeURL(href: string){
-        return decodeURIComponent(href);
+        return CustomUriEncoder.decode(href);
     }
 }

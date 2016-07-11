@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "./user.service";
 import {User} from "./user";
+import {CustomUriEncoder} from "../utils/encoder";
 import {ROUTER_DIRECTIVES} from "@angular/router";
 
 @Component({
@@ -33,6 +34,6 @@ export class UsersComponent implements OnInit {
     }
 
     encodeURL(href: string){
-        return encodeURIComponent(href);
+        return CustomUriEncoder.encode(href);
     }
 }
