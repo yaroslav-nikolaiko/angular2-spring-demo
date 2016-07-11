@@ -6,7 +6,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
 
 /**
  * Created by ynikolaiko on 1/28/16.
@@ -29,5 +35,10 @@ public class Application extends SpringBootServletInitializer {
         public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
             //config.exposeIdsFor(Account.class);
         }
+    }
+
+    @Controller
+    public static class ViewResolver{
+
     }
 }

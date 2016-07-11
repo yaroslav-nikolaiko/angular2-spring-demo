@@ -56,6 +56,11 @@
     </dependencies>
 
     <build>
+<!--        <resources>
+            <resource>
+                <directory>src/main/webapp/dist</directory>
+            </resource>
+        </resources>-->
         <plugins>
 
             <plugin>
@@ -74,7 +79,7 @@
                         <id>exec-npm-install</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <workingDirectory>src/main/ui</workingDirectory>
+                            <workingDirectory>src/main/webapp</workingDirectory>
                             <executable>npm</executable>
                             <arguments>
                                 <argument>install</argument>
@@ -88,7 +93,7 @@
                         <id>build-frontend</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <workingDirectory>src/main/ui</workingDirectory>
+                            <workingDirectory>src/main/webapp</workingDirectory>
                             <executable>npm</executable>
                             <arguments>
                                 <argument>run</argument>
@@ -108,13 +113,14 @@
                 <version>2.6</version>
                 <configuration>
                     <warName>demo</warName>
-                    <webResources>
+                    <warSourceDirectory>${basedir}/src/main/webapp/dist</warSourceDirectory>
+                    <!--<webResources>
                         <resource>
-                            <directory>${basedir}/src/main/ui/dist</directory>
+                            <directory>${basedir}/src/main/webapp/dist</directory>
                             <filtering>false</filtering>
                             <targetPath>/</targetPath>
                         </resource>
-                    </webResources>
+                    </webResources>-->
                 </configuration>
             </plugin>
         </plugins>

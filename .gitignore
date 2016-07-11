@@ -26,7 +26,7 @@ hs_err_pid*
 
 node_modules/
 typings/
-src/main/ui/app/*.js
-src/main/ui/app/*.map
-src/main/ui/compiled/
-src/main/ui/dist/
+src/main/webapp/app/*.js
+src/main/webapp/app/*.map
+src/main/webapp/compiled/
+src/main/webapp/dist/
