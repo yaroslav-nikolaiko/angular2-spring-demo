@@ -112,15 +112,8 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
-                    <warName>demo</warName>
+                    <warName>ROOT</warName>
                     <warSourceDirectory>${basedir}/src/main/webapp/dist</warSourceDirectory>
-                    <!--<webResources>
-                        <resource>
-                            <directory>${basedir}/src/main/webapp/dist</directory>
-                            <filtering>false</filtering>
-                            <targetPath>/</targetPath>
-                        </resource>
-                    </webResources>-->
                 </configuration>
             </plugin>
         </plugins>

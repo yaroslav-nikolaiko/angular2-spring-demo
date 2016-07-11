@@ -39,6 +39,9 @@ public class Application extends SpringBootServletInitializer {
 
     @Controller
     public static class ViewResolver{
-
+        @RequestMapping({"/users/**", "/posts/**"})
+        public String index(){
+            return "/index.html";
+        }
     }
 }
