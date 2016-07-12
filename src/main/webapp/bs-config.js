@@ -7,7 +7,7 @@ module.exports = {
         baseDir: ".",
         middleware: {
             1: proxyMiddleware('/api', {
-                target: 'http://localhost:8080',
+                target: 'http://server:8080',
                 changeOrigin: true   // for vhosted sites, changes host header to match to target's host
             }),
 
