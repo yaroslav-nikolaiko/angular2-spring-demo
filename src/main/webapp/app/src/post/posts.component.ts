@@ -1,8 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 
 import {PostService} from './post.service';
-import {Post} from "./post";
+import {Post, Comment} from "./post";
 import {SpinnerComponent} from "../utils/spinner.component";
+import {Observable} from "rxjs/Rx";
 
 @Component({
     templateUrl: 'app/templates/posts.html',
@@ -13,6 +14,7 @@ export class PostsComponent implements OnInit {
     posts: Post[] = [];
     isLoading = true;
     currentPost;
+    comments: Observable<Comment[]>;
 
     constructor(private _postService: PostService) {
     }
@@ -27,6 +29,7 @@ export class PostsComponent implements OnInit {
     }
 
     select(post: Post){
+        this.comments = post.comments();
         this.currentPost = post;
     }
 }

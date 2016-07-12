@@ -12,7 +12,11 @@ export class RestUtils{
     }
 
     getList(link: string): Observable<any>{
-       return this.httpGet(link).map(res=>res.json()._embedded[link]);
+       return this.httpGet(link).map(res=>{
+           const list: any[] = res.json()._embedded[link];
+           list.forEach(i=>this.resolveLinks(i));
+           return list;
+       });
     }
 
     save(link: string, entity: any){
@@ -23,12 +27,25 @@ export class RestUtils{
         return this.http.put(entity._links.self.href, entity, {headers: this.headers}).map(res=>res.json());
     }
 
-    get(href: string): Observable<any>{
-        return this.http.get(href, {headers: this.headers}).map(res=>res.json());
+    get(href: string, link?: string): Observable<any>{
+        return this.http.get(href, {headers: this.headers}).map(res=>{
+            let entity = res.json();
+            if(entity['_embedded'] && link)
+                return this.resolveLinks(entity['_embedded'][link]);
+            return this.resolveLinks(entity);
+        });
     }
 
     delete(entity: any) {
         return this.http.delete(entity._links.self.href, {headers: this.headers});
+    }
+
+    private resolveLinks(entity){
+        for(let link in entity._links){
+            if(link=="self") continue;
+            entity[link] = () => this.get(entity._links[link].href, link);
+        }
+        return entity;
     }
 
     private getEntryPoint(): Observable<any> {

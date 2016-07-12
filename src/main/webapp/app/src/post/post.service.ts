@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {RestUtils} from "../utils/rest.utils";
 import {Observable} from "rxjs/Rx";
-import {Post} from "./post";
+import {Post, Comment} from "./post";
 
 @Injectable()
 export class PostService {
