@@ -76,12 +76,12 @@ gulp.task('systemjs-bundle',['compile', 'copy:libs', 'copy:assets'], function() 
     return builder.loadConfig('./systemjs.config.js')
         .then(function(){
             var outputFile = dist+'/bundle.js';
-            var prod = false;
+            var prod = true;
             return builder.buildStatic('app', outputFile, {
                 minify: prod,
                 mangle: prod,
                 rollup: prod,
-                sourceMaps: true
+                sourceMaps: false
             });
         })
 });
