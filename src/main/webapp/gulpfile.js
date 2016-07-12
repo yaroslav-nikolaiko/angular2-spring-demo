@@ -11,15 +11,14 @@ const dist = 'dist';
 var js=[
     'node_modules/core-js/client/shim.min.js',
     'node_modules/zone.js/dist/zone.min.js',
-    'node_modules/reflect-metadata/Reflect.js',
-    'node_modules/systemjs/dist/system.src.js'
+    'node_modules/reflect-metadata/Reflect.js'
 ];
 
 // old  'node_modules/bootstrap/dist/css/bootstrap.css'
 
 var css=[
-    'node_modules/bootswatch/flatly/bootstrap.css',
-    'node_modules/font-awesome/css/font-awesome.css'
+    'node_modules/bootswatch/flatly/bootstrap.min.css',
+    'node_modules/font-awesome/css/font-awesome.min.css'
 ];
 
 var fonts=[
@@ -76,12 +75,12 @@ gulp.task('systemjs-bundle',['compile', 'copy:libs', 'copy:assets'], function() 
     return builder.loadConfig('./systemjs.config.js')
         .then(function(){
             var outputFile = dist+'/bundle.js';
-            var prod = true;
+            var prod = false;
             return builder.buildStatic('app', outputFile, {
                 minify: prod,
                 mangle: prod,
                 rollup: prod,
-                sourceMaps: false
+                sourceMaps: true
             });
         })
 });
