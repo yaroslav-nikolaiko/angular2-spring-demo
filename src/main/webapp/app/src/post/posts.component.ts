@@ -34,6 +34,7 @@ export class PostsComponent implements OnInit {
     }
 
     reloadPostsForUser(user){
+        this.isLoading = true;
         if(!user){
             this.loadAllPosts();
             return;
@@ -41,7 +42,9 @@ export class PostsComponent implements OnInit {
         user.posts().subscribe(posts=>{
             console.log(posts);
             this.posts = posts;
-        }, error=>console.log(error));
+        },
+            error=>console.log(error),
+            () => this.isLoading = false);
     }
 
     loadAllPosts() {
