@@ -1,3 +1,5 @@
+import {Observable} from "rxjs/Rx";
+import {Post} from "../post/post";
 /**
  * Created by yaroslav on 04.07.16.
  */
@@ -15,4 +17,6 @@ export class User{
     name: string;
     email: string;
     address = new Address();
+
+    posts: ()=>Observable<Post[]>;
 }

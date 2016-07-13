@@ -17,7 +17,6 @@ export class PostsComponent implements OnInit {
     users: User[] = [];
     isLoading = true;
     currentPost;
-    selectedUser = "";
     comments: Observable<Comment[]>;
 
     constructor(private _postService: PostService,
@@ -25,12 +24,7 @@ export class PostsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._postService.getPosts()
-            .subscribe(posts =>
-                this.posts = posts,
-                null,
-                () => this.isLoading = false
-            );
+        this.loadAllPosts();
         this._userService.getUsers().subscribe(u=>this.users = u);
     }
 
@@ -39,7 +33,23 @@ export class PostsComponent implements OnInit {
         this.currentPost = post;
     }
 
-    reloadPosts(event){
-        console.log(event);
+    reloadPostsForUser(user){
+        if(!user){
+            this.loadAllPosts();
+            return;
+        }
+        user.posts().subscribe(posts=>{
+            console.log(posts);
+            this.posts = posts;
+        }, error=>console.log(error));
+    }
+
+    loadAllPosts() {
+        this._postService.getPosts()
+            .subscribe(posts =>
+                    this.posts = posts,
+                null,
+                () => this.isLoading = false
+            );
     }
 }

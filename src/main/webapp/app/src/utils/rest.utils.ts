@@ -30,8 +30,11 @@ export class RestUtils{
     get(href: string, link?: string): Observable<any>{
         return this.http.get(href, {headers: this.headers}).map(res=>{
             let entity = res.json();
-            if(entity['_embedded'] && link)
-                return this.resolveLinks(entity['_embedded'][link]);
+            if(entity['_embedded'] && link ){
+                if(entity['_embedded'][link])
+                    return this.resolveLinks(entity['_embedded'][link]);
+                return [];
+            }
             return this.resolveLinks(entity);
         });
     }
@@ -41,6 +44,10 @@ export class RestUtils{
     }
 
     private resolveLinks(entity){
+        if(entity instanceof Array)
+            for(let i=0; i<entity.length; i++)
+                entity[i] = this.resolveLinks(entity[i]);
+
         for(let link in entity._links){
             if(link=="self") continue;
             entity[link] = () => this.get(entity._links[link].href, link);
