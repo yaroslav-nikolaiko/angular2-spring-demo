@@ -50,7 +50,7 @@ export class PostsComponent implements OnInit {
     loadAllPosts() {
         this._postService.getPosts()
             .subscribe(posts =>
-                    this.posts = posts,
+                    this.posts = posts.list,
                 null,
                 () => this.isLoading = false
             );

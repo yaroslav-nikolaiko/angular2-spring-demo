@@ -1,22 +1,58 @@
-import {Http, Headers} from "@angular/http";
+import {Http, Headers, URLSearchParams, RequestOptionsArgs} from "@angular/http";
 import 'rxjs/add/operator/map';
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Rx";
+import {PagingEntity} from "./paging.entity";
+import {PageNumber} from "./paging.params.resolver";
+
+export interface EntityOptions{
+    link: string;
+    href?: string;
+    params?: {};
+    searchParams?: URLSearchParams;
+}
 
 @Injectable()
 export class RestUtils{
     headers: Headers;
     entryPoint;
+
     constructor(private http: Http){this.headers = new Headers();
         this.headers.append('X-Forwarded-Host', location.host);
     }
 
-    getList(link: string): Observable<any>{
-       return this.httpGet(link).map(res=>{
-           const list: any[] = res.json()._embedded[link];
-           list.forEach(i=>this.resolveLinks(i));
-           return list;
-       });
+    getList(link :string, href?: string):Observable<any>{
+        var options: EntityOptions= {
+            link: link,
+            params: PageNumber[link],
+            href: href
+        };
+        return this.httpGet(options).map(res=> {
+            var json = res.json();
+            if (json.page) {
+                var pagingEntity = this.pagingEntity(json, options);
+                pagingEntity.list.forEach(i=>this.resolveLinks(i));
+                return pagingEntity;
+            }else{
+                const list: any[] = json._embedded[options.link];
+                list.forEach(i=>this.resolveLinks(i));
+                return list;
+            }
+        });
+    }
+
+    private pagingEntity(json: any, options:EntityOptions):PagingEntity<any> {
+        var pagingEntity = new PagingEntity(json._embedded[options.link], json.page);
+        var pagingLink = (pLink:string)=> {
+            if (json._links[pLink])
+                pagingEntity[pLink] = () => this.getList(
+                    options.link,
+                    json._links[pLink].href);
+        };
+        pagingLink('first');
+        pagingLink('next');
+        pagingLink('last');
+        return pagingEntity;
     }
 
     save(link: string, entity: any){
@@ -62,10 +98,40 @@ export class RestUtils{
             .map(res=>this.entryPoint=res.json());
     }
 
-    private httpGet(link: string): Observable<any>{
+    private httpGet(options: EntityOptions): Observable<any>{
         return this.getEntryPoint().flatMap(entity=>{
-            return this.http.get(entity._links[link].href, {headers: this.headers});
+            let link = options.link;
+            options.href = entity._links[link].href;
+            this.resolveOptions(options);
+            return this.http.get(options.href, {
+                headers: this.headers,
+                search: options.searchParams});
         });
+    }
+
+    private resolveOptions(options: EntityOptions){
+        var resolveUriVariables = (uri: string, params:{}):string=>{
+            for(let p in params)
+                uri = uri.split("{"+p+"}").join(params[p]);
+            return uri;
+        };
+
+        var resolveUriParameters = ()=>{
+            let matcher = options.href.match(/{\?(.*)}/);
+            if(! matcher) return;
+
+            options.href = options.href.split(matcher[0])[0];
+
+            if(!options.searchParams)
+                options.searchParams = new URLSearchParams();
+            for(let p of matcher[1].split(',')){
+                if(options.params[p])
+                    options.searchParams.append(p, options.params[p]);
+            }
+        };
+
+        options.href = resolveUriVariables(options.href, options.params);
+        resolveUriParameters();
     }
 
     private httpPOST(link: string, body: any): Observable<any>{

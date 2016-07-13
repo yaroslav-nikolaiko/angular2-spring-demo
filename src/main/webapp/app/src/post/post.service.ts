@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {RestUtils} from "../utils/rest.utils";
 import {Observable} from "rxjs/Rx";
 import {Post, Comment} from "./post";
+import {PagingEntity} from "../utils/paging.entity";
 
 @Injectable()
 export class PostService {

@@ -1,14 +1,14 @@
 import {Observable} from "rxjs/Rx";
 
-export class PagingEntity<T>{
-    entity: T;
+interface Page{
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
+}
 
-    page: {
-        size: number,
-        totalElements: number,
-        totalPages: number,
-        number: number;
-    };
+export class PagingEntity<T>{
+    constructor(public list: T, public page :Page){}
 
     first: ()=>Observable<PagingEntity<T>>;
     next: ()=>Observable<PagingEntity<T>>;
