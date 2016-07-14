@@ -3,6 +3,7 @@ package education.demo.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -33,7 +34,6 @@ public class Account {
     @JoinColumn(name="ADDRESS_ID")
     Address address;
 
-    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JoinColumn(name = "ACCOUNT_FK")
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "account")
     List<Post> posts;
 }

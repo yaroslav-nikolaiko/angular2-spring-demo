@@ -26,4 +26,7 @@ public class Post {
     @JoinColumn(name = "POST_FK")
     List<Comment> comments;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ACCOUNT_FK")
+    Account account;
 }

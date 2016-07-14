@@ -8,6 +8,7 @@ import {PageNumber} from "./paging.params.resolver";
 export interface EntityOptions{
     link: string;
     href?: string;
+    search?: boolean;
     params?: {};
     searchParams?: URLSearchParams;
 }
@@ -20,6 +21,27 @@ export class RestUtils{
     constructor(private http: Http){this.headers = new Headers();
         this.headers.append('X-Forwarded-Host', location.host);
     }
+
+    /*search(link: string, queryName: string, params: {}){
+        return this.getEntryPoint().flatMap(entity=>{
+            /!*options: EntityOptions= {
+                link: queryName;
+                search: true;
+            };
+            let link = options.link;*!/
+
+            return this.http.get(options.href, {
+                headers: this.headers,
+                search: options.searchParams});
+            });
+
+            options.href = entity._links[link].href;
+            this.resolveOptions(options);
+            return this.http.get(options.href, {
+                headers: this.headers,
+                search: options.searchParams});
+        });
+    }*/
 
     getList(link :string, href?: string):Observable<any>{
         var options: EntityOptions= {
