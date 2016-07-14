@@ -12,7 +12,7 @@ export class PostService {
 
     }
 
-    getPosts(): Observable<Post[]> {
+    getPosts(): Observable<PagingEntity<Post[]>> {
         return this.restUtils.getList('posts');
     }
 
