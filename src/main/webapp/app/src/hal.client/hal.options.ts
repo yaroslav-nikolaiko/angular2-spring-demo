@@ -1,6 +1,6 @@
 export interface HalOptions{
     href?: string;
-    search?: boolean;
+    search?: string;
     params?: {};
     searchKey?: string;
 }

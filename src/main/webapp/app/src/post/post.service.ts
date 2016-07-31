@@ -25,7 +25,7 @@ export class PostService {
 
     getByUser(user: HalEntity){
         let options: HalOptions = {
-            search: true,
+            search: "byAccount",
             params:{
                 size: 2,
                 href: user._links['self'].href

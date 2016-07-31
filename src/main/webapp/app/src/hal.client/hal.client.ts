@@ -5,14 +5,6 @@ import {Observable} from "rxjs/Rx";
 import {PagingEntity} from "./paging.entity";
 import {HalOptions} from "./hal.options";
 
-export interface EntityOptions{
-    link: string;
-    href?: string;
-    search?: boolean;
-    params?: {};
-    searchParams?: URLSearchParams;
-}
-
 @Injectable()
 export class HalClient{
     headers: Headers;
@@ -65,7 +57,9 @@ export class HalClient{
     }
 
     private pagingEntity(json: any, resource: string, options:HalOptions):PagingEntity<any> {
-        var pagingEntity = new PagingEntity(json._embedded[resource], json.page);
+        let list = json._embedded[resource];
+        if(! list) list = [];
+        var pagingEntity = new PagingEntity(list, json.page);
 
         pagingLink('first');
         pagingLink('next');
@@ -81,11 +75,23 @@ export class HalClient{
     }
 
     private httpGet(resource: string, options?: HalOptions): Observable<any>{
-        return this.getEntryPoint().flatMap(entity=>{
+        let search = false;
+        let entry = ()=>{return this.getEntryPoint()};
+        if(options && options.search){
+            search = true;
+            entry = () =>{return this.searchPoint(resource, options)};
+        }
+
+
+        return entry().flatMap(entity=>{
             let urlSearchParams: URLSearchParams = null;
             let href = options ? options.href : null;
             if( ! href){
-                href = entity._links[resource].href;
+                let link = resource;
+                if(search){
+                    link = options.search;
+                }
+                href = entity._links[link].href;
                 if(options){
                     options.href = href;
                     urlSearchParams = this.resolveOptions(options);
@@ -98,6 +104,31 @@ export class HalClient{
         });
     }
 
+    private searchPoint(resource:string, options?:HalOptions):Observable<any> {
+        return this.getEntryPoint().flatMap(entity=> {
+            let href = entity._links[resource].href;
+            href = this.resolveSearchUri(href, options);
+
+            return this.http.get(href, {
+                headers: this.headers
+            }).map(res=>res.json())
+        })
+    }
+
+    private resolveSearchUri(uri: string, options: HalOptions):string{
+        if(options.search){
+            uri = uri.replace(/{\?(.*)}/, "");
+            let searchKey = this.searchKey;
+            if(options.searchKey){
+                searchKey = options.searchKey;
+            }
+            if(! uri.endsWith("/"))
+                uri += "/";
+            uri += searchKey;
+        }
+        return uri;
+    };
+
     private resolveOptions(options: HalOptions): URLSearchParams {
         let resolveSearchUri = (uri: string):string =>{
             if(options.search){
@@ -109,7 +140,7 @@ export class HalClient{
                     uri += "/";
                 uri += searchKey;
             }
-            options.search = false;
+            options.search = null;
             return uri;
         };
 
