@@ -4,13 +4,13 @@ import {APP_ROUTER_PROVIDERS} from "./app.routes";
 import {provideForms, disableDeprecatedForms} from "@angular/forms";
 import {CanDeactivateUserForm} from "./utils/can.deacrivate.user.form";
 import {HTTP_PROVIDERS} from "@angular/http";
-import {RestUtils} from "./utils/rest.utils";
+import {HalClient} from "./hal.client/hal.client";
 
 bootstrap(AppComponent, [
     CanDeactivateUserForm,
     APP_ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
-    RestUtils,
+    HalClient,
     disableDeprecatedForms(),
     provideForms()
 ])

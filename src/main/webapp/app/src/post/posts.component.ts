@@ -39,12 +39,13 @@ export class PostsComponent implements OnInit {
             this.loadAllPosts();
             return;
         }
-        user.posts().subscribe(posts=>{
-            console.log(posts);
-            this.posts = posts;
-        },
-            error=>console.log(error),
-            () => this.isLoading = false);
+
+        this._postService.getByUser(user)
+            .subscribe(posts =>
+                    this.posts = posts.list,
+                error=>console.log(error),
+                () => this.isLoading = false
+            );
     }
 
     loadAllPosts() {

@@ -1,33 +1,33 @@
 import {Injectable} from "@angular/core";
-import {RestUtils} from "../utils/rest.utils";
 import {User} from "./user";
 import {Observable} from "rxjs/Rx";
 import {Response} from "@angular/http";
+import {HalClient} from "../hal.client/hal.client";
 
 
 @Injectable()
 export class UserService{
 
-    constructor(private restUtils: RestUtils){
+    constructor(private halClient: HalClient){
 
     }
 
     getUsers(): Observable<User[]>{
-        return this.restUtils.getList('accounts');
+        return this.halClient.getList('accounts');
     }
 
     get(href: string): Observable<User>{
-        return this.restUtils.get(href);
+        return this.halClient.get(href);
     }
 
     save(user: User){
         if(user['_links'])
-            return this.restUtils.update(user);
+            return this.halClient.update(user);
         else
-            return this.restUtils.save('accounts', user) ;
+            return this.halClient.save('accounts', user) ;
     }
     
     delete(user: User): Observable<Response>{
-        return this.restUtils.delete(user);
+        return this.halClient.delete(user);
     }
 }

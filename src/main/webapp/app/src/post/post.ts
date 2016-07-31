@@ -1,4 +1,5 @@
 import {Observable} from "rxjs/Rx";
+import {HalEntity} from "../hal.client/hal.entity";
 /**
  * Created by yaroslav on 11.07.16.
  */
@@ -11,7 +12,7 @@ export class Comment{
     body: string;
 }
 
-export class Post{
+export class Post implements HalEntity{
     static pages = 3;
     title: string;
     body: string;

@@ -1,10 +1,11 @@
 import {Observable} from "rxjs/Rx";
 import {Post} from "../post/post";
+import {HalEntity} from "../hal.client/hal.entity";
 /**
  * Created by yaroslav on 04.07.16.
  */
 
-export class Address {
+export class Address{
     street: string;
     suite: string;
     city: string;
@@ -12,7 +13,7 @@ export class Address {
 }
 
 
-export class User{
+export class User implements HalEntity{
     id: number;
     name: string;
     email: string;
