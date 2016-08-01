@@ -1,6 +1,6 @@
-import {Http, Headers, URLSearchParams, RequestOptionsArgs} from "@angular/http";
+import {Http, Headers, URLSearchParams} from "@angular/http";
 import 'rxjs/add/operator/map';
-import {Injectable, ReflectiveInjector} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Rx";
 import {PagingEntity} from "./paging.entity";
 import {HalOptions} from "./hal.options";

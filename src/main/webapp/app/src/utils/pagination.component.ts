@@ -1,5 +1,6 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {OnChanges} from '@angular/core';
+import {PagingEntity} from "../hal.client/paging.entity";
 
 @Component({
     selector: 'pagination',
@@ -24,37 +25,54 @@ import {OnChanges} from '@angular/core';
 `
 })
 export class PaginationComponent implements OnChanges {
-    @Input() totalPages = 1;
+    @Input() pagingEntity: PagingEntity<any>;
     @Output('page-changed') pageChanged = new EventEmitter();
-    pages: any[];
+    @Output('loading') loading = new EventEmitter();
+    totalPages: number = 1;
+    pages: number[] = [];
     currentPage;
 
     ngOnChanges(){
         this.currentPage = 1;
-
-        this.pages = [];
-        for (var i = 1; i <= this.totalPages; i++)
-            this.pages.push(i);
+        if(this.pagingEntity){
+            this.totalPages = this.pagingEntity.page.totalPages;
+            this.pages = [];
+            for (var i = 1; i <= this.totalPages; i++)
+                this.pages.push(i);
+        }
     }
 
     changePage(page){
+        if(this.currentPage == page) return;
+        this.loading.emit(true);
         this.currentPage = page;
-        this.pageChanged.emit(page);
+        this.pagingEntity.goToPage(page-1).subscribe(pagingEntity=>{
+            this.pagingEntity = pagingEntity;
+            this.pageChanged.emit(pagingEntity.list)
+        });
     }
 
     previous(){
         if (this.currentPage == 1)
             return;
+        this.loading.emit(true);
 
         this.currentPage--;
-        this.pageChanged.emit('previous');
+        this.pagingEntity.prev().subscribe(pagingEntity=>{
+            this.pagingEntity = pagingEntity;
+            this.pageChanged.emit(pagingEntity.list)
+        });
     }
 
     next(){
         if (this.currentPage == this.pages.length)
             return;
+        this.loading.emit(true);
 
         this.currentPage++;
-        this.pageChanged.emit('next');
+        this.pagingEntity.next().subscribe(pagingEntity=>{
+            this.pagingEntity = pagingEntity;
+            this.pageChanged.emit(pagingEntity.list)
+        });
     }
 }

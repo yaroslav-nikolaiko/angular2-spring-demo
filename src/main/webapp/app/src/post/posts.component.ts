@@ -15,8 +15,9 @@ import {PagingEntity} from "../hal.client/paging.entity";
     directives: [SpinnerComponent, PaginationComponent]
 })
 export class PostsComponent implements OnInit {
-    //posts: Post[] = [];
-    posts: PagingEntity<Post>;
+    pagingEntity: PagingEntity<Post>;
+
+    posts: Post[] = [];
     users: User[] = [];
     isLoading = true;
     currentPost;
@@ -44,8 +45,10 @@ export class PostsComponent implements OnInit {
         }
 
         this._postService.getByUser(user)
-            .subscribe(posts =>
-                    this.posts = posts,
+            .subscribe(posts =>{
+                this.pagingEntity = posts;
+                this.posts = posts.list;
+            },
                 error=>console.log(error),
                 () => this.isLoading = false
             );
@@ -53,37 +56,21 @@ export class PostsComponent implements OnInit {
 
     loadAllPosts() {
         this._postService.getPosts()
-            .subscribe(posts =>
-                    this.posts = posts,
+            .subscribe(posts =>{
+                    this.pagingEntity = posts;
+                    this.posts = posts.list;
+                },
                 null,
                 () => this.isLoading = false
             );
     }
 
-    onPageChanged(page: any){
+    onPageChanged(posts: Post[]){
+        this.isLoading = false;
+        this.posts = posts;
+    }
+
+    postsLoading(){
         this.isLoading = true;
-        if(page == "next"){
-            this.posts.next().subscribe(posts =>
-                    this.posts = posts,
-                null,
-                () => this.isLoading = false
-            );
-        }else if(page == "previous"){
-            this.posts.prev().subscribe(posts =>
-                    this.posts = posts,
-                null,
-                () => this.isLoading = false
-            );
-        }else{
-            if(this.posts.page.number == page - 1){
-                this.isLoading = false;
-                return;
-            }
-            this.posts.goToPage(page - 1).subscribe(posts =>
-                    this.posts = posts,
-                null,
-                () => this.isLoading = false
-            );
-        }
     }
 }
