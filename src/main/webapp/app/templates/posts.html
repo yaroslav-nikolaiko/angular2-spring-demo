@@ -8,8 +8,9 @@
             </option>
         </select>
         <spinner [visible]="isLoading"></spinner>
+        <pagination [totalPages]="posts?.page?.totalPages" (page-changed)="onPageChanged($event)"></pagination>
         <ul class="list-group posts">
-            <li *ngFor="let post of posts"
+            <li *ngFor="let post of posts?.list"
                 class="list-group-item"
                 [class.active]="currentPost == post"
                 (click)="select(post)">

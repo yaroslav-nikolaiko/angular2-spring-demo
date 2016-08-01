@@ -4,14 +4,14 @@ import {OnChanges} from '@angular/core';
 @Component({
     selector: 'pagination',
     template: `
-    <nav *ngIf="items.length > pageSize">
+    <nav *ngIf="totalPages > 1">
         <ul class="pagination">
             <li [class.disabled]="currentPage == 1">
                 <a (click)="previous()" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <li [class.active]="currentPage == page" *ngFor="#page of pages" (click)="changePage(page)">
+            <li [class.active]="currentPage == page" *ngFor="let page of pages" (click)="changePage(page)">
                 <a>{{ page }}</a>
             </li>
             <li [class.disabled]="currentPage == pages.length">
@@ -24,8 +24,7 @@ import {OnChanges} from '@angular/core';
 `
 })
 export class PaginationComponent implements OnChanges {
-    @Input() items = [];
-    @Input('page-size') pageSize = 10;
+    @Input() totalPages = 1;
     @Output('page-changed') pageChanged = new EventEmitter();
     pages: any[];
     currentPage;
@@ -33,9 +32,8 @@ export class PaginationComponent implements OnChanges {
     ngOnChanges(){
         this.currentPage = 1;
 
-        var pagesCount = this.items.length / this.pageSize;
         this.pages = [];
-        for (var i = 1; i <= pagesCount; i++)
+        for (var i = 1; i <= this.totalPages; i++)
             this.pages.push(i);
     }
 
@@ -49,7 +47,7 @@ export class PaginationComponent implements OnChanges {
             return;
 
         this.currentPage--;
-        this.pageChanged.emit(this.currentPage);
+        this.pageChanged.emit('previous');
     }
 
     next(){
@@ -57,6 +55,6 @@ export class PaginationComponent implements OnChanges {
             return;
 
         this.currentPage++;
-        this.pageChanged.emit(this.currentPage);
+        this.pageChanged.emit('next');
     }
 }

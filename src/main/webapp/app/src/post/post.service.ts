@@ -14,7 +14,7 @@ export class PostService {
 
     }
 
-    getPosts(): Observable<PagingEntity<Post[]>> {
+    getPosts(): Observable<PagingEntity<Post>> {
         let options: HalOptions = {
             params:{
                 size: 2

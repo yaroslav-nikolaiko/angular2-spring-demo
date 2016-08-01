@@ -61,9 +61,20 @@ export class HalClient{
         if(! list) list = [];
         var pagingEntity = new PagingEntity(list, json.page);
 
+
+        let goToPageLink = () =>{
+            pagingEntity['goToPage'] = (page: number) => {
+                options.href = null;
+                options.params['page'] = page;
+                return this.getList(resource, options);
+            }
+        };
+
         pagingLink('first');
         pagingLink('next');
         pagingLink('last');
+        pagingLink('prev');
+        goToPageLink();
         return pagingEntity;
 
         function pagingLink (pLink:string){
@@ -140,7 +151,7 @@ export class HalClient{
                     uri += "/";
                 uri += searchKey;
             }
-            options.search = null;
+            //options.search = null;
             return uri;
         };
 

@@ -6,14 +6,17 @@ import {SpinnerComponent} from "../utils/spinner.component";
 import {Observable} from "rxjs/Rx";
 import {User} from "../user/user";
 import {UserService} from "../user/user.service";
+import {PaginationComponent} from "../utils/pagination.component";
+import {PagingEntity} from "../hal.client/paging.entity";
 
 @Component({
     templateUrl: 'app/templates/posts.html',
     providers: [PostService, UserService],
-    directives: [SpinnerComponent]
+    directives: [SpinnerComponent, PaginationComponent]
 })
 export class PostsComponent implements OnInit {
-    posts: Post[] = [];
+    //posts: Post[] = [];
+    posts: PagingEntity<Post>;
     users: User[] = [];
     isLoading = true;
     currentPost;
@@ -42,7 +45,7 @@ export class PostsComponent implements OnInit {
 
         this._postService.getByUser(user)
             .subscribe(posts =>
-                    this.posts = posts.list,
+                    this.posts = posts,
                 error=>console.log(error),
                 () => this.isLoading = false
             );
@@ -51,9 +54,32 @@ export class PostsComponent implements OnInit {
     loadAllPosts() {
         this._postService.getPosts()
             .subscribe(posts =>
-                    this.posts = posts.list,
+                    this.posts = posts,
                 null,
                 () => this.isLoading = false
             );
+    }
+
+    onPageChanged(page: any){
+        this.isLoading = true;
+        if(page == "next"){
+            this.posts.next().subscribe(posts =>
+                    this.posts = posts,
+                null,
+                () => this.isLoading = false
+            );
+        }else if(page == "previous"){
+            this.posts.prev().subscribe(posts =>
+                    this.posts = posts,
+                null,
+                () => this.isLoading = false
+            );
+        }else{
+            this.posts.goToPage(page).subscribe(posts =>
+                    this.posts = posts,
+                null,
+                () => this.isLoading = false
+            );
+        }
     }
 }
