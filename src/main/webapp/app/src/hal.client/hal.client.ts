@@ -70,19 +70,19 @@ export class HalClient{
             }
         };
 
+        let pagingLink = (pLink:string)=>{
+            if (json._links[pLink])
+                pagingEntity[pLink] = () => this.getList(
+                    resource,
+                    {href: json._links[pLink].href})
+        };
+
         pagingLink('first');
         pagingLink('next');
         pagingLink('last');
         pagingLink('prev');
         goToPageLink();
         return pagingEntity;
-
-        function pagingLink (pLink:string){
-            if (json._links[pLink])
-                pagingEntity[pLink] = () => this.getList(
-                    resource,
-                    {href: json._links[pLink].href})
-        }
     }
 
     private httpGet(resource: string, options?: HalOptions): Observable<any>{

@@ -75,7 +75,11 @@ export class PostsComponent implements OnInit {
                 () => this.isLoading = false
             );
         }else{
-            this.posts.goToPage(page).subscribe(posts =>
+            if(this.posts.page.number == page - 1){
+                this.isLoading = false;
+                return;
+            }
+            this.posts.goToPage(page - 1).subscribe(posts =>
                     this.posts = posts,
                 null,
                 () => this.isLoading = false
