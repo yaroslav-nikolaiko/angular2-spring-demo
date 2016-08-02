@@ -4,7 +4,6 @@ import {BasicValidators} from "../utils/validators";
 import {Router, ActivatedRoute} from "@angular/router";
 import {UserService} from "./user.service";
 import {User, Address} from "./user";
-import {CustomUriEncoder} from "../utils/encoder";
 
 @Component({
     selector: 'users',
@@ -25,7 +24,7 @@ export class UserFormComponent implements OnInit{
     ngOnInit() {
         this.route.params
             .map(params=>params['href'])
-            .filter(href=>href != 'new')
+            .filter(href=>href != null)
             .flatMap(href=>this.userService.get(href))
             .do(user=>user.address = user.address ? user.address : new Address())
             .subscribe(user=>this.user = user);

@@ -29,7 +29,7 @@
                 <hr/>
                 <div class="media" *ngFor="let comment of comments | async">
                     <div *ngIf="comment.user" class="media-left">
-                        <a [routerLink]="[encodeURL(comment.user._links.self.href)]">
+                        <a [routerLink]="['/user', {href: comment.user._links.self.href}]">
                             <img class="media-object thumbnail" src="http://lorempixel.com/80/80/people?random" alt="...">
                         </a>
                     </div>

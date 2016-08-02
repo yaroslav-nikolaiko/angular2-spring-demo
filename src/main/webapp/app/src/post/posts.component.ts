@@ -8,7 +8,6 @@ import {User} from "../user/user";
 import {UserService} from "../user/user.service";
 import {PaginationComponent} from "../utils/pagination.component";
 import {PagingEntity} from "../hal.client/paging.entity";
-import {CustomUriEncoder} from "../utils/encoder";
 import {ROUTER_DIRECTIVES} from "@angular/router";
 
 @Component({
@@ -78,10 +77,4 @@ export class PostsComponent implements OnInit {
     postsLoading(){
         this.isLoading = true;
     }
-
-    encodeURL(href: string){
-        if(! href) return "#";
-        return CustomUriEncoder.encode(href);
-    }
-
 }
