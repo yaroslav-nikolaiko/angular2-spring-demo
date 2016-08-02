@@ -25,9 +25,12 @@ export class HalClient{
                 pagingEntity.list.forEach(i=>this.resolveLinks(i));
                 return pagingEntity;
             }else{
-                const list: any[] = json._embedded[resource];
-                list.forEach(i=>this.resolveLinks(i));
-                return list;
+                if(json._embedded){
+                    const list: any[] = json._embedded[resource];
+                    list.forEach(i=>this.resolveLinks(i));
+                    return list;
+                }else
+                    return json;
             }
         });
     }

@@ -3,6 +3,8 @@ import {User} from "./user";
 import {Observable} from "rxjs/Rx";
 import {Response} from "@angular/http";
 import {HalClient} from "../hal.client/hal.client";
+import {HalOptions} from "../hal.client/hal.options";
+import {HalEntity} from "../hal.client/hal.entity";
 
 
 @Injectable()
@@ -19,6 +21,17 @@ export class UserService{
     get(href: string): Observable<User>{
         return this.halClient.get(href);
     }
+
+    getByComment(comment: HalEntity): Observable<User>{
+        let options:HalOptions = {
+            search: "byComment",
+            params:{
+                href: comment._links['self'].href
+            }
+        };
+        return this.halClient.getList("accounts", options);
+    }
+
 
     save(user: User){
         if(user['_links'])
