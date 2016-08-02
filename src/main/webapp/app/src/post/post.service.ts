@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Rx";
-import {Post, Comment} from "./post";
+import {Post} from "./post";
 import {PagingEntity} from "../hal.client/paging.entity";
-import {User} from "../user/user";
 import {HalClient} from "../hal.client/hal.client";
 import {HalOptions} from "../hal.client/hal.options";
 import {HalEntity} from "../hal.client/hal.entity";

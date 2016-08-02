@@ -8,15 +8,15 @@ import {PagingEntity} from "../hal.client/paging.entity";
     <nav *ngIf="totalPages > 1">
         <ul class="pagination">
             <li [class.disabled]="currentPage == 1">
-                <a (click)="previous()" aria-label="Previous">
+                <a (click)="previous()" aria-label="Previous" class="clickable">
                 <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li [class.active]="currentPage == page" *ngFor="let page of pages" (click)="changePage(page)">
-                <a>{{ page }}</a>
+                <a class="clickable">{{ page }}</a>
             </li>
             <li [class.disabled]="currentPage == pages.length">
-                <a (click)="next()" aria-label="Next">
+                <a (click)="next()" aria-label="Next" class="clickable">
                 <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
