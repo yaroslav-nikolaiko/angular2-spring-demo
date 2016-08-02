@@ -32,8 +32,4 @@ export class UsersComponent implements OnInit {
         }
 
     }
-
-    encodeURL(href: string){
-        return CustomUriEncoder.encode(href);
-    }
 }

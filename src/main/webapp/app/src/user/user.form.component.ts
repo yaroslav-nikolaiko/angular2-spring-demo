@@ -25,7 +25,6 @@ export class UserFormComponent implements OnInit{
     ngOnInit() {
         this.route.params
             .map(params=>params['href'])
-            .map(href => this.decodeURL(href))
             .filter(href=>href != 'new')
             .flatMap(href=>this.userService.get(href))
             .do(user=>user.address = user.address ? user.address : new Address())
@@ -50,9 +49,5 @@ export class UserFormComponent implements OnInit{
                 this.router.navigateByUrl("/");
             },
                 error=>console.log(error));
-    }
-
-    decodeURL(href: string){
-        return CustomUriEncoder.decode(href);
     }
 }
