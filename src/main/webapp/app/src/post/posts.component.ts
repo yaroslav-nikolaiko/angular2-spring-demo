@@ -8,11 +8,13 @@ import {User} from "../user/user";
 import {UserService} from "../user/user.service";
 import {PaginationComponent} from "../utils/pagination.component";
 import {PagingEntity} from "../hal.client/paging.entity";
+import {CustomUriEncoder} from "../utils/encoder";
+import {ROUTER_DIRECTIVES} from "@angular/router";
 
 @Component({
     templateUrl: 'app/templates/posts.html',
     providers: [PostService, UserService],
-    directives: [SpinnerComponent, PaginationComponent]
+    directives: [SpinnerComponent, PaginationComponent, ROUTER_DIRECTIVES]
 })
 export class PostsComponent implements OnInit {
     pagingEntity: PagingEntity<Post>;
@@ -33,7 +35,10 @@ export class PostsComponent implements OnInit {
     }
 
     select(post: Post){
-        this.comments = post.comments();
+        this.comments = post.comments().map(c=>{
+            c.forEach(comment=>this._userService.getByComment(comment).subscribe(u=>comment['user']=u));
+            return c;
+        });
         this.currentPost = post;
     }
 
@@ -73,4 +78,10 @@ export class PostsComponent implements OnInit {
     postsLoading(){
         this.isLoading = true;
     }
+
+    encodeURL(href: string){
+        if(! href) return "#";
+        return CustomUriEncoder.encode(href);
+    }
+
 }
